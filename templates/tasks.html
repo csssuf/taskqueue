@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block tasksactive %}class="active"{% end %}
+{% block content %}
+<div class="jumbotron">
+	<div class="container">
+		<h1>Add a task page</h1>
+	</div>
+</div>
+<script>
+	var ws = new WebSocket({{ "'" + conf['websockets']['address'] + "'" }});
+	ws.onopen = function () {
+		console.log('Websocket opened.');
+	};
+	ws.onmessage = function(ev) {
+		console.log("Message received: " + ev.data);
+	};
+	ws.onclose = function(ev) {
+		console.log("Websocket closed: " + ev.data);
+	};
+	ws.onerror = function(ev) {
+		console.log("Websocket error:  " + ev.data);
+	};
+</script>
+{% end %}

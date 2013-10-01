@@ -32,7 +32,8 @@ class AddHandler(web.RequestHandler):
 
 
 class TaskHandler(web.RequestHandler):
-    pass
+    def get(self):
+        self.render("templates/tasks.html", conf=cfgarr)
 
 
 class WSHandler(websocket.WebSocketHandler):
