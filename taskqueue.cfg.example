@@ -10,4 +10,4 @@ tasktypeplural = Tasks
 host = localhost
 port = 8080
 url = /ws
-address = ws://%(host):%(port)%(url)
+address = ws://%(host)s:%(port)s%(url)s
