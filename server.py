@@ -19,7 +19,7 @@ def main():
 
 class IndexHandler(web.RequestHandler):
     def get(self):
-        self.render("index.html", conf=cfgarr)
+        self.render("templates/index.html", conf=cfgarr)
 
 if __name__ == '__main__':
     main()
