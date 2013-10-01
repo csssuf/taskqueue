@@ -4,6 +4,7 @@ from tornado import websocket, web, ioloop
 import configparser as cfgp
 
 cfgarr = None
+tasks = []
 #sqlconn = sql.connect('db/tasks.db')
 
 def main():
@@ -24,17 +25,17 @@ def main():
 
 class IndexHandler(web.RequestHandler):
     def get(self):
-        self.render("templates/index.html", conf=cfgarr)
+        self.render("templates/index.html", conf=cfgarr, nts=len(tasks))
 
 
 class AddHandler(web.RequestHandler):
     def get(self):
-        self.render("templates/addtask.html", conf=cfgarr)
+        self.render("templates/addtask.html", conf=cfgarr, nts=len(tasks))
 
 
 class TaskHandler(web.RequestHandler):
     def get(self):
-        self.render("templates/tasks.html", conf=cfgarr)
+        self.render("templates/tasks.html", conf=cfgarr, nts=len(tasks))
 
 
 class WSHandler(websocket.WebSocketHandler):
