@@ -14,8 +14,8 @@
 
 			<ul class="nav navbar-nav">
 				<li {% block homeactive %}{% end %}><a href="/">Home</a></li>
-				<li {% block addactive %}{% end %}><a href="/addtask.html">Add {{ conf['html']['tasktype'] }}</a></li>
-				<li {% block tasksactive %}{% end %}><a href="/tasks.html">View {{ conf['html']['tasktypeplural'] }}</a></li>
+				<li {% block addactive %}{% end %}><a href="/addtask">Add {{ conf['html']['tasktype'] }}</a></li>
+				<li {% block tasksactive %}{% end %}><a href="/tasks">View {{ conf['html']['tasktypeplural'] }}</a></li>
 			</ul>
 		</nav>
 		{% block content %}
