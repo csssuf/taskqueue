@@ -1,0 +1,13 @@
+[core]
+port = 8080
+staticpath = /path/to/static/files/
+[html]
+title = Task Queue
+description = Public Task Queue
+tasktype = Task
+tasktypeplural = Tasks
+[websockets]
+host = localhost
+port = 8080
+url = /ws
+address = ws://%(host):%(port)%(url)
