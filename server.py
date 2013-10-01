@@ -8,7 +8,11 @@ def main():
     global cfgarr
     cfgarr = cfgp.ConfigParser()
     cfgarr.read('taskqueue.cfg')
-    app = web.Application([(r'/', IndexHandler)])
+    app = web.Application([
+        (r'/', IndexHandler),
+        (r'/static/(.*)', web.StaticFileHandler, {'path':
+            cfgarr['core']['staticpath']})
+        ])
     app.listen(cfgarr['core']['port'])
     ioloop.IOLoop.instance().start()
 
