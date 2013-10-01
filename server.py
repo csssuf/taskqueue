@@ -4,7 +4,7 @@ from tornado import websocket, web, ioloop
 import configparser as cfgp
 
 cfgarr = None
-
+#sqlconn = sql.connect('db/tasks.db')
 
 def main():
     global cfgarr
@@ -15,7 +15,8 @@ def main():
         (r'/static/(.*)', web.StaticFileHandler, {'path':
             cfgarr['core']['staticpath']}),
         (r'/addtask', AddHandler),
-        (r'/tasks', TaskHandler)
+        (r'/tasks', TaskHandler),
+        (r'/ws', WSHandler)
         ])
     app.listen(cfgarr['core']['port'])
     ioloop.IOLoop.instance().start()
@@ -37,7 +38,15 @@ class TaskHandler(web.RequestHandler):
 
 
 class WSHandler(websocket.WebSocketHandler):
-    pass
+    lastsent = None
+    def open(self):
+        print('Websocket opened.')
+
+    def on_message(self, message):
+        print('Message received: %s' %(message))
+
+    def on_close(self):
+        print('Websocket closed.')
 
 if __name__ == '__main__':
     main()
