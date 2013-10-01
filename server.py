@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from tornado import websocket, web, ioloop
 import sqlite3 as sql
 import configparser as cfgp
