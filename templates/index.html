@@ -23,20 +23,5 @@
 				<h1>{{ conf['html']['description'] }}</h1>
 			</div>
 		</div>
-		<script>
-			var ws = new WebSocket({{ "'" + conf['websockets']['address'] + "'" }});
-			ws.onopen = function() {
-				console.log("Websocket opened.");
-			};
-			ws.onmessage = function(ev) {
-				console.log("Message received: " + ev.data);
-			};
-			ws.onclose = function(ev) {
-				console.log("Websocket closed: " + ev.data);
-			};
-			ws.onerror = function(ev) {
-				console.log("Error received:   " + ev.data);
-			};
-		</script>
 	</body>
 </html>
