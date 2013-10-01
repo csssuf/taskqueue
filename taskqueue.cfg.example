@@ -1,0 +1,10 @@
+[core]
+port = 8080
+[html]
+title = Task Queue
+description = Public Task Queue
+[websockets]
+host = localhost
+port = 8080
+url = /ws
+address = ws://%(host):%(port)%(url)
