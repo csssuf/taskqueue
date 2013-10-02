@@ -5,5 +5,25 @@
 	<div class="container">
 		<h2>Add a {{ conf['html']['tasktype'] }}</h2>
 	</div>
+	<div class="container">
+		<a data-toggle="modal" href="#addTaskModal" class="btn btn-primary btn-lg">Add a {{ conf['html']['tasktype'].lower() }}</a>
+	</div>
+</div>
+<div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="atmodal" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">{{ conf['html']['tasktype'] }}</h4>
+			</div>
+			<div class="modal-body">
+				Stuff
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-failure" data-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-success">Submit {{conf['html']['tasktype'] }}</button>
+			</div>
+		</div>
+	</div>
 </div>
 {% end %}
