@@ -3,9 +3,10 @@ from tornado import websocket, web, ioloop
 #import sqlite3 as sql
 import configparser as cfgp
 import utils
+import json
 
 cfgarr = None
-tasks = [['Megadeth', 'Countdown to Extinction', 'csssuf', '']]
+tasks = []
 #sqlconn = sql.connect('db/tasks.db')
 
 def main():
@@ -19,7 +20,7 @@ def main():
         (r'/addtask', AddHandler),
         (r'/tasks', TaskHandler),
         (r'/ws', WSHandler)
-        ])
+        ], debug=True)
     app.listen(cfgarr['core']['port'])
     ioloop.IOLoop.instance().start()
 
@@ -57,6 +58,7 @@ class WSHandler(websocket.WebSocketHandler):
             toremove = int(msg[2])
             if toremove < len(tasks):
                 del(tasks[toremove])
+            self.ping(bytes())
         elif msg[0] == 'update':
             self.ping(bytes())
         elif msg[0] == 'addtask':
@@ -70,6 +72,7 @@ class WSHandler(websocket.WebSocketHandler):
         #print('Message received: %s' %(message))
 
     def on_pong(self, data):
+        self.write_message(json.dumps(tasks))
         print('pong received')
 
     def on_close(self):

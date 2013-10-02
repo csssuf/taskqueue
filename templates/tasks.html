@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 {% block tasksactive %}class="active"{% end %}
 {% block content %}
-<div class="jumbotron">
-	<div class="container">
-		<h2>{{ conf['html']['tasktypeplural'] }}</h2>
+<div class="panel panel-info">
+	<div class="panel-heading">{{ conf['html']['tasktypeplural'] }}</div>
+	<div class="panel-body">
+		<p>This page auto-refreshes every {{ conf['websockets']['updatefreq'] }} seconds.
+		<button class="btn btn-info btn-sm pull-right" id="manualrefresh">Refresh <span class="glyphicon glyphicon-refresh"></span></button></p>
 	</div>
 </div>
-<div class="panel panel-default">
+<div class="panel panel-primary">
 	<div class="panel-heading">{{ conf['html']['tasktype'] }} List</div>
 	<div class="panel-body">
 		<p>{{ conf['html']['tldescription'] }}</p>
@@ -23,7 +25,7 @@
 		</thead>
 		<tbody>
 			{% for i in range(len(tasks)) %}
-			<tr>
+			<tr id={{ i }}>
 				<td>{{ i + 1 }}</td>
 				{% for td in tasks[i] %}
 				<td>{{ td }}</td>
@@ -40,6 +42,7 @@
 	};
 	ws.onmessage = function(ev) {
 		console.log("Message received: " + ev.data);
+		onUpdate(ev.data);
 	};
 	ws.onclose = function(ev) {
 		console.log("Websocket closed: " + ev.data);
@@ -51,5 +54,10 @@
 		ws.send('update');
 		setTimeout(requestUpdate, {{ conf['websockets']['updatefreq'] }}000);
 	}
+	function onUpdate(upd) {
+		console.log("Update received: " + upd);
+	}
+	//yay jquery
+	$('#manualrefresh').click(requestUpdate);
 </script>
 {% end %}
