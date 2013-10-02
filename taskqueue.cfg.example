@@ -23,5 +23,9 @@ address = ws://%(host)s:%(port)s%(url)s
 # <field> = <optional>
 # Where optional is True if optional, or False if required.
 [tasks]
-title = False
+Title = False
 Assignee = True
+
+[taskexamples]
+Title = Fix bug 381378285
+Assignee = John Doe
