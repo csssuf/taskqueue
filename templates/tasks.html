@@ -10,6 +10,7 @@
 	var ws = new WebSocket({{ "'" + conf['websockets']['address'] + "'" }});
 	ws.onopen = function () {
 		console.log('Websocket opened.');
+		requestUpdate();
 	};
 	ws.onmessage = function(ev) {
 		console.log("Message received: " + ev.data);
@@ -20,5 +21,9 @@
 	ws.onerror = function(ev) {
 		console.log("Websocket error:  " + ev.data);
 	};
+	function requestUpdate() {
+		ws.send('update');
+		setTimeout(requestUpdate, {{ conf['websockets']['updatefreq'] }}000);
+	}
 </script>
 {% end %}

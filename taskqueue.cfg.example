@@ -14,6 +14,8 @@ tasktypeplural = Tasks
 host = localhost
 port = 8080
 url = /ws
+# updatefreq is in seconds
+updatefreq = 60
 # Don't touch address! Instead modify host, port, and/or url
 # and the changes will be reflected in address.
 address = ws://%(host)s:%(port)s%(url)s

@@ -19,10 +19,11 @@
 			<div class="modal-body">
 				{% for t in conf['tasks'] %}
 					<div class="input-group">
-						<span class="input-group-addon">{{ t }}</span>
+						<span class="input-group-addon">{{ cf(t) }}</span>
 						<input type="text" class="form-control" placeholder="{{ conf['taskexamples'][t] }}" id="{{ t.lower() }}">
 						<span class="input-group-addon"><span class="{{ 'glyphicon glyphicon-exclamation-sign' if conf['tasks'][t] == "False" else '' }}"></span></span>
 					</div>
+					<br />
 				{% end %}
 			</div>
 			<div class="modal-footer">

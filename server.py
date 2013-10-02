@@ -2,6 +2,7 @@
 from tornado import websocket, web, ioloop
 #import sqlite3 as sql
 import configparser as cfgp
+import utils
 
 cfgarr = None
 tasks = []
@@ -30,7 +31,8 @@ class IndexHandler(web.RequestHandler):
 
 class AddHandler(web.RequestHandler):
     def get(self):
-        self.render("templates/addtask.html", conf=cfgarr, nts=len(tasks))
+        self.render("templates/addtask.html", conf=cfgarr, nts=len(tasks),
+                cf=utils.casefix)
 
 
 class TaskHandler(web.RequestHandler):
@@ -39,12 +41,23 @@ class TaskHandler(web.RequestHandler):
 
 
 class WSHandler(websocket.WebSocketHandler):
+    global tasks
     lastsent = None
     def open(self):
         print('Websocket opened.')
+        self.ping(bytes())
 
     def on_message(self, message):
+        msg = message.split('.')
+        if msg[0] == 'sudo' and msg[1] == 'delete':
+            toremove = int(msg[2])
+            tasks.delete(toremove)
+        elif msg[0] == 'update':
+            self.ping(bytes())
         print('Message received: %s' %(message))
+
+    def on_pong(self, data):
+        print('pong received')
 
     def on_close(self):
         print('Websocket closed.')
