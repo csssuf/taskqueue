@@ -6,6 +6,32 @@
 		<h2>{{ conf['html']['tasktypeplural'] }}</h2>
 	</div>
 </div>
+<div class="panel panel-default">
+	<div class="panel-heading">{{ conf['html']['tasktype'] }} List</div>
+	<div class="panel-body">
+		<p>{{ conf['html']['tldescription'] }}</p>
+	</div>
+	
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>#</th>
+			{% for th in conf['tasks'] %}
+				<th>{{ cf(th) }}</th>
+			{% end %}
+			</tr>
+		</thead>
+		<tbody>
+			{% for i in range(len(tasks)) %}
+			<tr>
+				<td>{{ i + 1 }}</td>
+				{% for td in tasks[i] %}
+				<td>{{ td }}</td>
+				{% end %}
+			</tr>
+			{% end %}
+		</tbody>
+	</table>
 <script>
 	var ws = new WebSocket({{ "'" + conf['websockets']['address'] + "'" }});
 	ws.onopen = function () {

@@ -5,7 +5,7 @@ import configparser as cfgp
 import utils
 
 cfgarr = None
-tasks = []
+tasks = [['Megadeth', 'Countdown to Extinction', 'csssuf', '']]
 #sqlconn = sql.connect('db/tasks.db')
 
 def main():
@@ -37,7 +37,8 @@ class AddHandler(web.RequestHandler):
 
 class TaskHandler(web.RequestHandler):
     def get(self):
-        self.render("templates/tasks.html", conf=cfgarr, nts=len(tasks))
+        self.render("templates/tasks.html", conf=cfgarr, nts=len(tasks),
+                tasks=tasks, cf=utils.casefix)
 
 
 class WSHandler(websocket.WebSocketHandler):
@@ -48,13 +49,25 @@ class WSHandler(websocket.WebSocketHandler):
         self.ping(bytes())
 
     def on_message(self, message):
-        msg = message.split('.')
+        global tasks
+        msg = message.split(' ')
+        print(msg)
         if msg[0] == 'sudo' and msg[1] == 'delete':
+            print('removing' + msg[2])
             toremove = int(msg[2])
-            tasks.delete(toremove)
+            if toremove < len(tasks):
+                del(tasks[toremove])
         elif msg[0] == 'update':
             self.ping(bytes())
-        print('Message received: %s' %(message))
+        elif msg[0] == 'addtask':
+            print('adding song')
+            ratask = ''
+            for i in msg[1:]:
+                ratask += i + ' '
+            ratask = ratask[:len(ratask) - 1]
+            ntask = ratask.split('@___@')
+            tasks.append(ntask[:len(ntask) - 1])
+        #print('Message received: %s' %(message))
 
     def on_pong(self, data):
         print('pong received')

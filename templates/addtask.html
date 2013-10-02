@@ -35,6 +35,13 @@
 	</div>
 </div>
 <script>
+	var ws = new WebSocket({{ "'" + conf['websockets']['address'] + "'"}});
+	ws.onopen = function() {
+		console.log('Websocket opened.');
+	};
+	ws.onclose = function(ev) {
+		console.log("Websocket closed: " + ev.data);
+	};
 	formgood = true;
 	$('.btn-success').click(function() {
 			{% for t in conf['tasks'] %}
@@ -44,7 +51,7 @@
 				formgood = false;;
 				}
 			{% end %}
-			if(formgood) { console.log('form all good'); }
+			if(formgood) { ws.send('addtask ' {% for t in conf['tasks'] %} + $('#{{ t.lower() }}').val() + '@___@'{% end %}); }
 			else { formgood = true; }
 			});
 </script>
