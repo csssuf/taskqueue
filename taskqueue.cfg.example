@@ -1,13 +1,27 @@
 [core]
 port = 8080
 staticpath = /path/to/static/files/
+
+
 [html]
 title = Task Queue
 description = Public Task Queue
 tasktype = Task
 tasktypeplural = Tasks
+
+
 [websockets]
 host = localhost
 port = 8080
 url = /ws
+# Don't touch address! Instead modify host, port, and/or url
+# and the changes will be reflected in address.
 address = ws://%(host)s:%(port)s%(url)s
+
+# This section is used for fields that describe a task.
+# The format is as follows:
+# <field> = <optional>
+# Where optional is True if optional, or False if required.
+[tasks]
+title = False
+Assignee = True
