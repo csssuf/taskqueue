@@ -18,18 +18,14 @@
 		<thead>
 			<tr>
 				<th>#</th>
-			{% for th in conf['tasks'] %}
-				<th>{{ cf(th) }}</th>
-			{% end %}
+			{% for th in conf['tasks'] %}<th>{{ cf(th) }}</th>{% end %}
 			</tr>
 		</thead>
 		<tbody>
 			{% for i in range(len(tasks)) %}
 			<tr id={{ i }}>
 				<td>{{ i + 1 }}</td>
-				{% for td in tasks[i] %}
-				<td>{{ td }}</td>
-				{% end %}
+				{% for td in tasks[i] %}<td>{{ td }}</td>{% end %}
 			</tr>
 			{% end %}
 		</tbody>
@@ -57,7 +53,6 @@
 	function onUpdate(upd) {
 		console.log("Update received: " + upd);
 	}
-	//yay jquery
 	$('#manualrefresh').click(requestUpdate);
 </script>
 {% end %}
