@@ -14,14 +14,14 @@
 		<p>{{ conf['html']['tldescription'] }}</p>
 	</div>
 	
-	<table class="table table-hover">
+	<table class="table table-hover table-striped">
 		<thead>
 			<tr>
 				<th>#</th>
 			{% for th in conf['tasks'] %}<th>{{ cf(th) }}</th>{% end %}
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="utable">
 			{% for i in range(len(tasks)) %}
 			<tr id={{ i }}>
 				<td>{{ i + 1 }}</td>
@@ -38,7 +38,8 @@
 	};
 	ws.onmessage = function(ev) {
 		console.log("Message received: " + ev.data);
-		onUpdate(ev.data);
+		var udd = JSON.parse(ev.data);
+		onUpdate(udd);
 	};
 	ws.onclose = function(ev) {
 		console.log("Websocket closed: " + ev.data);
@@ -51,7 +52,16 @@
 		setTimeout(requestUpdate, {{ conf['websockets']['updatefreq'] }}000);
 	}
 	function onUpdate(upd) {
-		console.log("Update received: " + upd);
+		bodyupdate = "";
+		for(var i = 0; i < upd.length; i++) {
+			bodyupdate += "<tr id=\"" + i + "\">\n";
+			bodyupdate += "<td>" + (i + 1) + "</td>\n";
+			for(var j = 0; j < upd[i].length; j++) {
+				bodyupdate += "<td>" + upd[i][j] + "</td>\n";
+			}
+			bodyupdate += "</tr>\n";
+		}
+		$('#utable').html(bodyupdate);
 	}
 	$('#manualrefresh').click(requestUpdate);
 </script>
