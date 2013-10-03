@@ -52,6 +52,7 @@
 		setTimeout(requestUpdate, {{ conf['websockets']['updatefreq'] }}000);
 	}
 	function onUpdate(upd) {
+		updateBadge(upd);
 		bodyupdate = "";
 		for(var i = 0; i < upd.length; i++) {
 			bodyupdate += "<tr id=\"" + i + "\">\n";

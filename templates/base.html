@@ -15,9 +15,14 @@
 			<ul class="nav navbar-nav">
 				<li {% block homeactive %}{% end %} ><a href="/">Home </a></li>
 				<li {% block addactive %}{% end %}><a href="/addtask">Add {{ conf['html']['tasktype'] }}</a></li>
-				<li {% block tasksactive %}{% end %}><a href="/tasks">View {{ conf['html']['tasktypeplural'] }} <span class="badge">{{ nts }}</span></a></li>
+				<li {% block tasksactive %}{% end %}><a href="/tasks">View {{ conf['html']['tasktypeplural'] }} <span class="badge" id="taskbadge">{{ nts }}</span></a></li>
 			</ul>
 		</nav>
+		<script>
+			function updateBadge(upd) {
+				$('#taskbadge').html(upd.length);
+			}
+		</script>
 		{% block content %}
 		<div class="jumbotron">
 			<div class="container">
