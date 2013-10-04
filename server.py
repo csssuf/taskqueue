@@ -4,6 +4,7 @@ from tornado import websocket, web, ioloop
 import configparser as cfgp
 import utils
 import json
+import hashlib
 
 cfgarr = None
 tasks = []
@@ -53,10 +54,11 @@ class WSHandler(websocket.WebSocketHandler):
         global tasks
         msg = message.split(' ')
         print(msg)
-        if msg[0] == 'sudo' and msg[1] == 'delete':
-            print('removing' + msg[2])
-            toremove = int(msg[2])
-            if toremove < len(tasks):
+        if msg[0] == 'delete':
+            toremove = int(msg[1])
+            hl = hashlib.new('md5')
+            hl.update(cfgarr['core']['adminpass'].encode('utf-8'))
+            if toremove < len(tasks) and msg[2] == hl.hexdigest():
                 del(tasks[toremove])
             self.ping(bytes())
         elif msg[0] == 'update':

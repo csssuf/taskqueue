@@ -18,7 +18,8 @@
 		<thead>
 			<tr>
 				<th>#</th>
-			{% for th in conf['tasks'] %}<th>{{ cf(th) }}</th>{% end %}
+				{% for th in conf['tasks'] %}<th>{{ cf(th) }}</th>{% end %}
+				<th>Delete</th>
 			</tr>
 		</thead>
 		<tbody id="utable">
@@ -26,10 +27,33 @@
 			<tr id={{ i }}>
 				<td>{{ i + 1 }}</td>
 				{% for td in tasks[i] %}<td>{{ td }}</td>{% end %}
+				<td><a data-toggle="modal" href="#addModal{{ i }}"><span class="glyphicon glyphicon-trash"></span></a></td>
 			</tr>
 			{% end %}
 		</tbody>
 	</table>
+{% for i in range(len(tasks)) %}
+<div class="modal fade" id="addModal{{ i }}" tabindex="-1" role="dialog" aria-labelledby="atmodal" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Delete</h4>
+			</div>
+			<div class="modal-body">
+				<div class="input-group">
+					<input type="password" class="form-control" id="removetask-password{{ i }}" placeholder="Password">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default pw-cancel" data-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-success removetask-submit" id="{{i}}">Delete</button>
+			</div>
+		</div>
+	</div>
+</div>
+{% end %}
+<script src="http://www.myersdaily.org/joseph/javascript/md5.js"></script>
 <script>
 	var ws = new WebSocket({{ "'" + conf['websockets']['address'] + "'" }});
 	ws.onopen = function () {
@@ -62,10 +86,18 @@
 			for(var j = 0; j < upd[i].length; j++) {
 				bodyupdate += "<td>" + upd[i][j] + "</td>\n";
 			}
+			bodyupdate += "<td><a data-toggle=\"modal\" href=\"#addModal{{ i }}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>\n";
 			bodyupdate += "</tr>\n";
 		}
 		$('#utable').html(bodyupdate);
 	}
 	$('#manualrefresh').click(requestUpdate);
+	$('.removetask-submit').click(function(e) {
+				var tid = e.target.getAttribute("id");
+				var pw = $('#removetask-password' + tid).val()
+				var md5pw = md5(pw);
+				ws.send('delete ' + tid + ' ' + md5pw);
+				$('.pw-cancel').click();
+			});
 </script>
 {% end %}
