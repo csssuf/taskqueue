@@ -34,12 +34,14 @@
 	var ws = new WebSocket({{ "'" + conf['websockets']['address'] + "'" }});
 	ws.onopen = function () {
 		console.log('Websocket opened.');
-		requestUpdate();
+		//requestUpdate();
 	};
 	ws.onmessage = function(ev) {
 		console.log("Message received: " + ev.data);
 		var udd = JSON.parse(ev.data);
-		onUpdate(udd);
+		$('#utable').fadeOut();
+		setTimeout(function () { onUpdate(udd) }, 500);
+		setTimeout(function () { $('#utable').fadeIn() }, 400);
 	};
 	ws.onclose = function(ev) {
 		console.log("Websocket closed: " + ev.data);

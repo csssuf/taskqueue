@@ -47,7 +47,7 @@ class WSHandler(websocket.WebSocketHandler):
     lastsent = None
     def open(self):
         print('Websocket opened.')
-        self.ping(bytes())
+        #self.ping(bytes())
 
     def on_message(self, message):
         global tasks
