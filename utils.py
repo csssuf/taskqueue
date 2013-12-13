@@ -10,6 +10,6 @@ def casefix(s):
         fs = ''
         for j in se:
             fs += j + ' '
-        return fs[:len(fs)-2]
+        return fs[:len(fs)-1]
     else:
         return se[0]

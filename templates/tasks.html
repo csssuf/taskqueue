@@ -86,7 +86,7 @@
 			for(var j = 0; j < upd[i].length; j++) {
 				bodyupdate += "<td>" + upd[i][j] + "</td>\n";
 			}
-			bodyupdate += "<td><a data-toggle=\"modal\" href=\"#addModal{{ i }}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>\n";
+			bodyupdate += "<td><a data-toggle=\"modal\" href=\"#addModal\"" + i + "><span class=\"glyphicon glyphicon-trash\"></span></a></td>\n";
 			bodyupdate += "</tr>\n";
 		}
 		$('#utable').html(bodyupdate);

@@ -14,12 +14,14 @@ def main():
     global cfgarr
     cfgarr = cfgp.ConfigParser()
     cfgarr.read('taskqueue.cfg')
+    print([i for i in cfgarr['tasks']])
+    print([i for i in cfgarr['taskexamples']])
     app = web.Application([
-        (r'/', IndexHandler),
-        (r'/static/(.*)', web.StaticFileHandler, {'path':
+        (r'%s/' % cfgarr['core']['prefix'], IndexHandler),
+        (r'%s/static/(.*)' % cfgarr['core']['prefix'], web.StaticFileHandler, {'path':
             cfgarr['core']['staticpath']}),
-        (r'/addtask', AddHandler),
-        (r'/tasks', TaskHandler),
+        (r'%s/addtask' % cfgarr['core']['prefix'], AddHandler),
+        (r'%s/tasks' % cfgarr['core']['prefix'], TaskHandler),
         (r'/ws', WSHandler)
         ], debug=True)
     app.listen(cfgarr['core']['port'])
