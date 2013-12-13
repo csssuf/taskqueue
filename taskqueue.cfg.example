@@ -2,6 +2,7 @@
 port = 8080
 staticpath = /path/to/static/files/
 adminpass = password
+prefix = 
 
 
 [html]
@@ -16,6 +17,7 @@ tldescription =
 host = localhost
 port = 8080
 url = /ws
+prefix = 
 # updatefreq is in seconds
 updatefreq = 60
 # Don't touch address! Instead modify host, port, and/or url
